@@ -31,7 +31,7 @@
             <img src="resources/wyrmprints/400087_02.png" height="100px" width="100px" alt="">
             <img src="resources/dragons/210017_01.png" height="100px" width="100px" alt="">
 
-            <div class="ui one header">Elisanne : Anointed Lance</div>
+            <div class="ui one header">{{selectedAventurer.Name}} : {{selectedAventurer.Title}}</div>
             <div class="ui two mini statistics">
                 <div class="blue statistic">
                     <div class="value">
@@ -59,7 +59,7 @@
                     <div class="field">
                         <label style="text-align: left;">Character Name</label>
                         <select v-model="selectedAventurer">
-                            <option v-for="adventurer in all_adventurers" :value="adventurer">{{adventurer.Name}}</option>
+                            <option v-for="adventurer in all_adventurers" :value="adventurer">{{adventurer.Name}} : {{adventurer.Title}}</option>
                         </select>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                     <div class="field">
                         <label style="text-align: left;">Weapon Name</label>
                         <select v-model="selectedWeapon">
-                            <option v-for="weapon in all_weapons" :value="weapon">{{weapon.Name}}</option>
+                            <option v-for="weapon in filteredWeapons" :value="weapon">{{weapon.Name}}</option>
                         </select>
 
                     </div>
@@ -77,7 +77,7 @@
                     <div class="ui header">Wyrmprint</div>
                     <div class="field">
                         <label style="text-align: left;">Wyrmprint Name</label>
-                        <select>
+                        <select v-model="selectedWyrmprint">
                             <option v-for="wyrmprint in all_wyrmprints" :value="wyrmprint">{{wyrmprint.Name}}</option>
                         </select>
 
@@ -87,12 +87,19 @@
                     <div class="ui header">Dragon</div>
                     <div class="field">
                         <label style="text-align: left;">Dragon Name</label>
-                        <select>
-                            <option v-for="dragon in all_dragons">{{dragon.Name}}</option>
+                        <select v-model="selectedDragon">
+                            <option v-for="dragon in all_dragons" :value="dragon">{{dragon.Name}}</option>
                         </select>
                     </div>
                 </div>
             </div>
+            <div class="ui hidden divider"></div>
+            <div class="ui divider"></div>
+            <div class="ui hidden divider"></div>
+            <p>If you liked this project you can check out other of my Dragalia Lost projects here:</p>
+            <button class="ui button"><a href="https://yujinred.github.io/Dragalia-Weapon-Material-Calculator/">Dragalia
+                    Weapon Material Calculator</a></button>
+            <button class="ui button"><a href="https://yujinred.github.io/dragalia-tier-list/">Dragalia Tier List</a></button>
 
         </div>
 </body>
@@ -124,6 +131,19 @@
         adventurer.PlusAtk4 = parseInt(adventurer.PlusAtk4);
         adventurer.McFullBonusAtk5 = parseInt(adventurer.McFullBonusAtk5);
     });
+    weapons.forEach(weapon => {
+        weapon.MaxHp = parseInt(weapon.MaxHp);
+        weapon.MaxAtk = parseInt(weapon.MaxAtk);
+    });
+    wyrmprints.forEach(wyrmprint => {
+        wyrmprint.MaxHp = parseInt(wyrmprint.MaxHp);
+        wyrmprint.MaxAtk = parseInt(wyrmprint.MaxAtk);
+    });
+    dragons.forEach(dragon => {
+        dragon.MaxHp = parseInt(dragon.MaxHp);
+        dragon.MaxAtk = parseInt(dragon.MaxAtk);
+    });
+
     new Vue({
         el: '#app',
         data: {
@@ -131,7 +151,7 @@
             all_weapons: weapons,
             all_wyrmprints: wyrmprints,
             all_dragons: dragons,
-            selectedAventurer: null,
+            selectedAventurer: adventurers[0],
             selectedWeapon: null,
             selectedWyrmprint: null,
             selectedDragon: null
@@ -148,7 +168,9 @@
                     this.selectedAventurer.PlusHp4 +
                     this.selectedAventurer.McFullBonusHp5
                     : 0;
-                hpTotal += parseInt(this.selectedWeapon != null ? this.selectedWeapon.MaxHp : 0);
+                hpTotal += this.selectedWeapon != null ? this.selectedWeapon.MaxHp : 0;
+                hpTotal += this.selectedWyrmprint != null ? this.selectedWyrmprint.MaxHp : 0;
+                hpTotal += this.selectedDragon != null ? this.selectedDragon.MaxHp : 0;
                 return hpTotal;
             },
             strValue: function () {
@@ -162,8 +184,13 @@
                     this.selectedAventurer.PlusAtk4 +
                     this.selectedAventurer.McFullBonusAtk5
                     : 0;
-                strTotal += parseInt(this.selectedWeapon != null ? this.selectedWeapon.MaxAtk : 0);
+                strTotal += this.selectedWeapon != null ? this.selectedWeapon.MaxAtk : 0;
+                strTotal += this.selectedWyrmprint != null ? this.selectedWyrmprint.MaxAtk : 0;
+                strTotal += this.selectedDragon != null ? this.selectedDragon.MaxAtk : 0;
                 return strTotal;
+            },
+            filteredWeapons: function () {
+                return this.all_weapons.filter(weapon => weapon.Type === this.selectedAventurer.WeaponType);
             }
         }
     })
