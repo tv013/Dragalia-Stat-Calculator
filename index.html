@@ -35,7 +35,7 @@
             <div class="ui two mini statistics">
                 <div class="blue statistic">
                     <div class="value">
-                        420
+                        {{hpValue}}
                     </div>
                     <div class="label">
                         HP
@@ -43,7 +43,7 @@
                 </div>
                 <div class="red statistic">
                     <div class="value">
-                        69
+                        {{strValue}}
                     </div>
                     <div class="label">
                         STR
@@ -52,178 +52,121 @@
             </div>
             <div class="ui divider"></div>
             <div class="ui hidden divider"></div>
+            <p>Currently this only calculate the maximum hp/str. Future updates will included adjustable levels.</p>
             <div class="ui grid">
                 <div class="ui form eight wide column">
                     <div class="ui header">Character</div>
                     <div class="field">
                         <label style="text-align: left;">Character Name</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="gender">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">(i.e. Elisanne)</div>
-                            <div class="menu">
-                                <div class="item" data-value="1">Male</div>
-                                <div class="item" data-value="0">Female</div>
-                            </div>
-                        </div>
-
-                        <div class="ui hidden divider"></div>
-                        <label style="text-align: left;">Rarity</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="gender">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">(i.e. 40)</div>
-                            <div class="menu">
-                                <div class="item" data-value="1">Male</div>
-                                <div class="item" data-value="0">Female</div>
-                            </div>
-                        </div>
-
-                        <div class="ui hidden divider"></div>
-                        <label style="text-align: left;">Level</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="gender">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">(i.e. 40)</div>
-                            <div class="menu">
-                                <div class="item" data-value="1">Male</div>
-                                <div class="item" data-value="0">Female</div>
-                            </div>
-                        </div>
-
-                        <div class="ui hidden divider"></div>
-                        <label style="text-align: left;">Mana Nodes</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="gender">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">(i.e. First Floor Completed)</div>
-                            <div class="menu">
-                                <div class="item" data-value="1">Male</div>
-                                <div class="item" data-value="0">Female</div>
-                            </div>
-                        </div>
+                        <select v-model="selectedAventurer">
+                            <option v-for="adventurer in all_adventurers" :value="adventurer">{{adventurer.Name}}</option>
+                        </select>
                     </div>
                 </div>
                 <div class="ui form eight wide column">
                     <div class="ui header">Weapon</div>
                     <div class="field">
                         <label style="text-align: left;">Weapon Name</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="gender">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">(i.e. Gae Bolg)</div>
-                            <div class="menu">
-                                <div class="item" data-value="1">Male</div>
-                                <div class="item" data-value="0">Female</div>
-                            </div>
-                        </div>
+                        <select v-model="selectedWeapon">
+                            <option v-for="weapon in all_weapons" :value="weapon">{{weapon.Name}}</option>
+                        </select>
 
-                        <div class="ui hidden divider"></div>
-                        <label style="text-align: left;">Unbind</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="gender">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">(i.e. 3)</div>
-                            <div class="menu">
-                                <div class="item" data-value="1">Male</div>
-                                <div class="item" data-value="0">Female</div>
-                            </div>
-                        </div>
-
-                        <div class="ui hidden divider"></div>
-                        <label style="text-align: left;">Level</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="gender">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">(i.e. 40)</div>
-                            <div class="menu">
-                                <div class="item" data-value="1">Male</div>
-                                <div class="item" data-value="0">Female</div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="ui form eight wide column">
                     <div class="ui header">Wyrmprint</div>
                     <div class="field">
                         <label style="text-align: left;">Wyrmprint Name</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="gender">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">(i.e. Plunder Pals)</div>
-                            <div class="menu">
-                                <div class="item" data-value="1">Male</div>
-                                <div class="item" data-value="0">Female</div>
-                            </div>
-                        </div>
+                        <select>
+                            <option v-for="wyrmprint in all_wyrmprints" :value="wyrmprint">{{wyrmprint.Name}}</option>
+                        </select>
 
-                        <div class="ui hidden divider"></div>
-                        <label style="text-align: left;">Unbind</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="gender">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">(i.e. 3)</div>
-                            <div class="menu">
-                                <div class="item" data-value="1">Male</div>
-                                <div class="item" data-value="0">Female</div>
-                            </div>
-                        </div>
-
-                        <div class="ui hidden divider"></div>
-                        <label style="text-align: left;">Level</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="gender">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">(i.e. 40)</div>
-                            <div class="menu">
-                                <div class="item" data-value="1">Male</div>
-                                <div class="item" data-value="0">Female</div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="ui form eight wide column">
                     <div class="ui header">Dragon</div>
                     <div class="field">
                         <label style="text-align: left;">Dragon Name</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="gender">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">(i.e. Leviathan)</div>
-                            <div class="menu">
-                                <div class="item" data-value="1">Male</div>
-                                <div class="item" data-value="0">Female</div>
-                            </div>
-                        </div>
-
-                        <div class="ui hidden divider"></div>
-                        <label style="text-align: left;">Unbind</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="gender">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">(i.e. 3)</div>
-                            <div class="menu">
-                                <div class="item" data-value="1">Male</div>
-                                <div class="item" data-value="0">Female</div>
-                            </div>
-                        </div>
-
-                        <div class="ui hidden divider"></div>
-                        <label style="text-align: left;">Level</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="gender">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">(i.e. 40)</div>
-                            <div class="menu">
-                                <div class="item" data-value="1">Male</div>
-                                <div class="item" data-value="0">Female</div>
-                            </div>
-                        </div>
+                        <select>
+                            <option v-for="dragon in all_dragons">{{dragon.Name}}</option>
+                        </select>
                     </div>
                 </div>
             </div>
 
         </div>
 </body>
+
+<script src="data/adventurerData.js"></script>
+<script src="data/weaponData.js"></script>
+<script src="data/wyrmprintData.js"></script>
+<script src="data/dragonData.js"></script>
+<script>
+    adventurers.forEach(adventurer => {
+        adventurer.MinHp3 = parseInt(adventurer.MinHp3);
+        adventurer.MinHp4 = parseInt(adventurer.MinHp4);
+        adventurer.MinHp5 = parseInt(adventurer.MinHp5);
+        adventurer.MaxHp = parseInt(adventurer.MaxHp);
+        adventurer.PlusHp0 = parseInt(adventurer.PlusHp0);
+        adventurer.PlusHp1 = parseInt(adventurer.PlusHp1);
+        adventurer.PlusHp2 = parseInt(adventurer.PlusHp2);
+        adventurer.PlusHp3 = parseInt(adventurer.PlusHp3);
+        adventurer.PlusHp4 = parseInt(adventurer.PlusHp4);
+        adventurer.McFullBonusHp5 = parseInt(adventurer.McFullBonusHp5);
+        adventurer.MinAtk3 = parseInt(adventurer.MinAtk3);
+        adventurer.MinAtk4 = parseInt(adventurer.MinAtk4);
+        adventurer.MinAtk5 = parseInt(adventurer.MinAtk5);
+        adventurer.MaxAtk = parseInt(adventurer.MaxAtk);
+        adventurer.PlusAtk0 = parseInt(adventurer.PlusAtk0);
+        adventurer.PlusAtk1 = parseInt(adventurer.PlusAtk1);
+        adventurer.PlusAtk2 = parseInt(adventurer.PlusAtk2);
+        adventurer.PlusAtk3 = parseInt(adventurer.PlusAtk3);
+        adventurer.PlusAtk4 = parseInt(adventurer.PlusAtk4);
+        adventurer.McFullBonusAtk5 = parseInt(adventurer.McFullBonusAtk5);
+    });
+    new Vue({
+        el: '#app',
+        data: {
+            all_adventurers: adventurers,
+            all_weapons: weapons,
+            all_wyrmprints: wyrmprints,
+            all_dragons: dragons,
+            selectedAventurer: null,
+            selectedWeapon: null,
+            selectedWyrmprint: null,
+            selectedDragon: null
+        },
+        computed: {
+            hpValue: function () {
+                var hpTotal = 0;
+                hpTotal += this.selectedAventurer != null ?
+                    this.selectedAventurer.MaxHp +
+                    this.selectedAventurer.PlusHp0 +
+                    this.selectedAventurer.PlusHp1 +
+                    this.selectedAventurer.PlusHp2 +
+                    this.selectedAventurer.PlusHp3 +
+                    this.selectedAventurer.PlusHp4 +
+                    this.selectedAventurer.McFullBonusHp5
+                    : 0;
+                hpTotal += parseInt(this.selectedWeapon != null ? this.selectedWeapon.MaxHp : 0);
+                return hpTotal;
+            },
+            strValue: function () {
+                var strTotal = 0;
+                strTotal += this.selectedAventurer != null ?
+                    this.selectedAventurer.MaxAtk +
+                    this.selectedAventurer.PlusAtk0 +
+                    this.selectedAventurer.PlusAtk1 +
+                    this.selectedAventurer.PlusAtk2 +
+                    this.selectedAventurer.PlusAtk3 +
+                    this.selectedAventurer.PlusAtk4 +
+                    this.selectedAventurer.McFullBonusAtk5
+                    : 0;
+                strTotal += parseInt(this.selectedWeapon != null ? this.selectedWeapon.MaxAtk : 0);
+                return strTotal;
+            }
+        }
+    })
+</script>
 
 </html>

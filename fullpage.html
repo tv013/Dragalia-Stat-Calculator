@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dragalia Stat Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css" />
+    <script src="lib/vue.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128073712-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-128073712-1');
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
+</head>
+
+<body>
+    <div id="app" class="ui center aligned container" style="padding: 1em;">
+        <h1 class="ui header">Dragalia Stat Calculator</h1>
+        <div>
+            <img src="resources/characters/100002_01_r05.png" height="160px" width="160px" alt="">
+            <img src="resources/weapons/305043_01_59901.png" height="100px" width="100px" alt="">
+            <img src="resources/wyrmprints/400087_02.png" height="100px" width="100px" alt="">
+            <img src="resources/dragons/210017_01.png" height="100px" width="100px" alt="">
+
+            <div class="ui one header">Elisanne : Anointed Lance</div>
+            <div class="ui two mini statistics">
+                <div class="blue statistic">
+                    <div class="value">
+                        420
+                    </div>
+                    <div class="label">
+                        HP
+                    </div>
+                </div>
+                <div class="red statistic">
+                    <div class="value">
+                        69
+                    </div>
+                    <div class="label">
+                        STR
+                    </div>
+                </div>
+            </div>
+            <div class="ui divider"></div>
+            <div class="ui hidden divider"></div>
+            <div class="ui grid">
+                <div class="ui form eight wide column">
+                    <div class="ui header">Character</div>
+                    <div class="field">
+                        <label style="text-align: left;">Character Name</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="gender">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">(i.e. Elisanne)</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">Male</div>
+                                <div class="item" data-value="0">Female</div>
+                            </div>
+                        </div>
+
+                        <div class="ui hidden divider"></div>
+                        <label style="text-align: left;">Rarity</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="gender">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">(i.e. 40)</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">Male</div>
+                                <div class="item" data-value="0">Female</div>
+                            </div>
+                        </div>
+
+                        <div class="ui hidden divider"></div>
+                        <label style="text-align: left;">Level</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="gender">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">(i.e. 40)</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">Male</div>
+                                <div class="item" data-value="0">Female</div>
+                            </div>
+                        </div>
+
+                        <div class="ui hidden divider"></div>
+                        <label style="text-align: left;">Mana Nodes</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="gender">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">(i.e. First Floor Completed)</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">Male</div>
+                                <div class="item" data-value="0">Female</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui form eight wide column">
+                    <div class="ui header">Weapon</div>
+                    <div class="field">
+                        <label style="text-align: left;">Weapon Name</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="gender">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">(i.e. Gae Bolg)</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">Male</div>
+                                <div class="item" data-value="0">Female</div>
+                            </div>
+                        </div>
+
+                        <div class="ui hidden divider"></div>
+                        <label style="text-align: left;">Unbind</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="gender">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">(i.e. 3)</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">Male</div>
+                                <div class="item" data-value="0">Female</div>
+                            </div>
+                        </div>
+
+                        <div class="ui hidden divider"></div>
+                        <label style="text-align: left;">Level</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="gender">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">(i.e. 40)</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">Male</div>
+                                <div class="item" data-value="0">Female</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui form eight wide column">
+                    <div class="ui header">Wyrmprint</div>
+                    <div class="field">
+                        <label style="text-align: left;">Wyrmprint Name</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="gender">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">(i.e. Plunder Pals)</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">Male</div>
+                                <div class="item" data-value="0">Female</div>
+                            </div>
+                        </div>
+
+                        <div class="ui hidden divider"></div>
+                        <label style="text-align: left;">Unbind</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="gender">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">(i.e. 3)</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">Male</div>
+                                <div class="item" data-value="0">Female</div>
+                            </div>
+                        </div>
+
+                        <div class="ui hidden divider"></div>
+                        <label style="text-align: left;">Level</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="gender">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">(i.e. 40)</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">Male</div>
+                                <div class="item" data-value="0">Female</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui form eight wide column">
+                    <div class="ui header">Dragon</div>
+                    <div class="field">
+                        <label style="text-align: left;">Dragon Name</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="gender">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">(i.e. Leviathan)</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">Male</div>
+                                <div class="item" data-value="0">Female</div>
+                            </div>
+                        </div>
+
+                        <div class="ui hidden divider"></div>
+                        <label style="text-align: left;">Unbind</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="gender">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">(i.e. 3)</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">Male</div>
+                                <div class="item" data-value="0">Female</div>
+                            </div>
+                        </div>
+
+                        <div class="ui hidden divider"></div>
+                        <label style="text-align: left;">Level</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="gender">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">(i.e. 40)</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">Male</div>
+                                <div class="item" data-value="0">Female</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+</body>
+
+</html>
