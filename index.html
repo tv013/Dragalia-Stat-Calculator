@@ -26,11 +26,7 @@
     <div id="app" class="ui center aligned container" style="padding: 1em;">
         <h1 class="ui header">Dragalia Stat Calculator</h1>
         <div>
-            <img src="resources/characters/100002_01_r05.png" height="160px" width="160px" alt="">
-            <img src="resources/weapons/305043_01_59901.png" height="100px" width="100px" alt="">
-            <img src="resources/wyrmprints/400087_02.png" height="100px" width="100px" alt="">
-            <img src="resources/dragons/210017_01.png" height="100px" width="100px" alt="">
-
+            <div class="ui hidden divider"></div>
             <div class="ui one header">{{selectedAventurer.Name}} : {{selectedAventurer.Title}}</div>
             <div class="ui two mini statistics">
                 <div class="blue statistic">
@@ -88,7 +84,7 @@
                     <div class="field">
                         <label style="text-align: left;">Dragon Name</label>
                         <select v-model="selectedDragon">
-                            <option v-for="dragon in all_dragons" :value="dragon">{{dragon.Name}}</option>
+                            <option v-for="dragon in all_dragons" :value="dragon">{{dragon.Name}} | HP {{dragon.ability.boostedHP}} | STR {{dragon.ability.boostedSTR}} </option>
                         </select>
                     </div>
                 </div>
@@ -108,6 +104,8 @@
 <script src="data/weaponData.js"></script>
 <script src="data/wyrmprintData.js"></script>
 <script src="data/dragonData.js"></script>
+<script src="data/abilityData.js"></script>
+<script src="util.js"></script>
 <script>
     adventurers.forEach(adventurer => {
         adventurer.MinHp3 = parseInt(adventurer.MinHp3);
@@ -139,10 +137,19 @@
         wyrmprint.MaxHp = parseInt(wyrmprint.MaxHp);
         wyrmprint.MaxAtk = parseInt(wyrmprint.MaxAtk);
     });
+    abilities.forEach(ability => {
+        ability.boostedHP = parseHPBoostFromSkill(ability);
+        ability.boostedSTR = parseSTRBoostFromSkill(ability);
+    });
     dragons.forEach(dragon => {
         dragon.MaxHp = parseInt(dragon.MaxHp);
         dragon.MaxAtk = parseInt(dragon.MaxAtk);
+        
+        dragon.ability = abilities.filter(ability => ability.Id === dragon.Abilities11)[0];
     });
+   
+
+    henlo();
 
     new Vue({
         el: '#app',
@@ -151,6 +158,7 @@
             all_weapons: weapons,
             all_wyrmprints: wyrmprints,
             all_dragons: dragons,
+            all_abilities: abilities,
             selectedAventurer: adventurers[0],
             selectedWeapon: null,
             selectedWyrmprint: null,
@@ -159,34 +167,49 @@
         computed: {
             hpValue: function () {
                 var hpTotal = 0;
-                hpTotal += this.selectedAventurer != null ?
-                    this.selectedAventurer.MaxHp +
+                var totalAdventurerHP = 0;
+                if (this.selectedAventurer != null) {
+                    totalAdventurerHP = this.selectedAventurer.MaxHp +
                     this.selectedAventurer.PlusHp0 +
                     this.selectedAventurer.PlusHp1 +
                     this.selectedAventurer.PlusHp2 +
                     this.selectedAventurer.PlusHp3 +
                     this.selectedAventurer.PlusHp4 +
-                    this.selectedAventurer.McFullBonusHp5
-                    : 0;
-                hpTotal += this.selectedWeapon != null ? this.selectedWeapon.MaxHp : 0;
+                    this.selectedAventurer.McFullBonusHp5;
+                }
+                hpTotal += totalAdventurerHP;
+                hpTotal += this.selectedWeapon != null ? this.selectedWeapon.MaxHp * 
+                (this.selectedWeapon.ElementalType === this.selectedAventurer.ElementalType ? 1.5 : 1)
+                : 0;
                 hpTotal += this.selectedWyrmprint != null ? this.selectedWyrmprint.MaxHp : 0;
                 hpTotal += this.selectedDragon != null ? this.selectedDragon.MaxHp : 0;
+                if (this.selectedDragon != null && this.selectedDragon.ElementalType === this.selectedAventurer.ElementalType) {
+                    hpTotal *= (1 + this.selectedDragon.ability.boostedHP/100);
+                }
                 return hpTotal;
             },
             strValue: function () {
                 var strTotal = 0;
-                strTotal += this.selectedAventurer != null ?
-                    this.selectedAventurer.MaxAtk +
+
+                var totalAdventurerSTR = 0;
+                if (this.selectedAventurer != null) {
+                    totalAdventurerSTR = this.selectedAventurer.MaxAtk +
                     this.selectedAventurer.PlusAtk0 +
                     this.selectedAventurer.PlusAtk1 +
                     this.selectedAventurer.PlusAtk2 +
                     this.selectedAventurer.PlusAtk3 +
                     this.selectedAventurer.PlusAtk4 +
-                    this.selectedAventurer.McFullBonusAtk5
-                    : 0;
-                strTotal += this.selectedWeapon != null ? this.selectedWeapon.MaxAtk : 0;
+                    this.selectedAventurer.McFullBonusAtk5;
+                }
+                strTotal += totalAdventurerSTR;
+                strTotal += this.selectedWeapon != null ? this.selectedWeapon.MaxAtk *
+                (this.selectedWeapon.ElementalType === this.selectedAventurer.ElementalType ? 1.5 : 1)
+                : 0;
                 strTotal += this.selectedWyrmprint != null ? this.selectedWyrmprint.MaxAtk : 0;
                 strTotal += this.selectedDragon != null ? this.selectedDragon.MaxAtk : 0;
+                if (this.selectedDragon != null && this.selectedDragon.ElementalType === this.selectedAventurer.ElementalType) {
+                    strTotal *= (1 + this.selectedDragon.ability.boostedSTR/100);
+                }
                 return strTotal;
             },
             filteredWeapons: function () {
